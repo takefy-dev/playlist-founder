@@ -46,6 +46,7 @@ async function spotifyCheckPlaylist(playlistID, spotifyClient, artistQuery){
     let i = 0
 
     for(const tracks of playlistTracks.items){
+        console.log(tracks)
         const track = tracks.track;
         const artists = track.artists;
         let names = artistQuery.split(' ').filter(x => x !== '');
