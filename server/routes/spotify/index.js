@@ -20,8 +20,7 @@ router.post('/:id', async (req, res) => {
     for(const playlist of preferedPlaylist.items){
         const playlistChecked = await spotifyCheckPlaylist(playlist.id, manager.spotifyApi, names);
         if(playlistChecked){
-            playlist.url = playlist.externalUrls.spotify;
-            console.log(playlist.url)
+            playlist.link = playlist.externalUrls.spotify;
             finalPreferedPlaylist.push(playlist);
         }
     }

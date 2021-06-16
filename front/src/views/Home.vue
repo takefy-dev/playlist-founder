@@ -12,33 +12,50 @@
         id="searchField"
         background-color="grey lighten-2"
         v-model="search"
-        messages="ffjkj"
+        :loading="loading"
     ></v-text-field>
+    <v-container class="my-5">
+      <v-row >
+        <v-col v-for="playlist in playlists" :key="playlist.id"  cols="4" sm="2">
+          <PlaylistCard :playlist="playlist"/>
+        </v-col>
+      </v-row>
+    </v-container>
+
+
+
+
+
   </v-container>
 </template>
 
 <script>
 
-  import { getPlaylistId, getRecommendedPlaylist } from '@/utils';
+  import { getPlaylistId, getRecommendedPlaylist } from '../utils/';
+  import PlaylistCard from "../components/PlaylistCard";
   export default {
     name: 'Home',
+    components: {
+      PlaylistCard
+    },
     data(){
       return {
        search: '',
+        loading : false,
+        playlists: null,
       }
     },
     methods: {
       getPlaylists: async function() {
         if(!this.search) return
+        this.loading = true;
         const id = getPlaylistId(this.search);
-        const playlists = await getRecommendedPlaylist(id)
-        console.log(playlists)
-
+        this.playlists = await getRecommendedPlaylist(id)
+        this.loading = false;
       }
     },
 
-    components: {
-    },
+
   }
 </script>
 
