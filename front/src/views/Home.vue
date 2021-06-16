@@ -1,5 +1,9 @@
 <template>
   <v-container class="text-center">
+    <div class="white--text pa-10 ma-10">
+      <h1 >You want some playlist that matches your tastes</h1>
+      <div class="text-title subtitle">Start now by entering your playlist url in the search bar</div>
+    </div>
     <v-text-field
         @click:append="getPlaylists"
         @click:append-outer="getPlaylists"
@@ -63,6 +67,10 @@
 #searchField{
   display: inline-block;
   padding: 50px;
+}
+
+.subtitle{
+  color: #ff848e;
 }
 
 </style>
