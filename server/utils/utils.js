@@ -46,13 +46,18 @@ async function spotifyCheckPlaylist(playlistID, spotifyClient, artistQuery){
     let i = 0
 
     for(const tracks of playlistTracks.items){
-        console.log(tracks)
-        const track = tracks.track;
-        const artists = track.artists;
-        let names = artistQuery.split(' ').filter(x => x !== '');
-        artists.forEach(artist => {
-            if(names.includes(artist.name.split(' ').join('-'))) i++;
-        })
+        let track = tracks.track;
+        if(track){
+            const artists = track.artists;
+            let names = artistQuery.split(' ').filter(x => x !== '');
+            if(artists){
+                artists.forEach(artist => {
+                    if(names.includes(artist.name.split(' ').join('-'))) i++;
+                })
+            }
+
+        }
+
     }
     if(playlistTracks.items.length / 2 > i) return playlistID;
     return undefined;

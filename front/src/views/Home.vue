@@ -20,7 +20,7 @@
     ></v-text-field>
     <v-container class="my-5">
       <v-row >
-        <v-col v-for="playlist in playlists" :key="playlist.id"  cols="4" sm="2">
+        <v-col v-for="playlist in playlists" :key="playlist.id" sm="1" md="4">
           <PlaylistCard :playlist="playlist"/>
         </v-col>
       </v-row>

@@ -3,7 +3,7 @@
       class="ma-auto"
       max-width="400"
       max-height="700"
-      height="500"
+      height="540"
       min-width="200"
       hover
   >
@@ -12,9 +12,9 @@
         height="200px"
         :src="isNaN(playlist.id) ? playlist.images[0].url : playlist['picture_big']"
     >
-      <v-card-title>{{ playlist.name || playlist.title }}</v-card-title>
-    </v-img>
 
+    </v-img>
+    <v-card-title>{{ playlist.name || playlist.title }}</v-card-title>
     <v-card-text class="text--primary">
       <div>{{ !playlist.description ? 'No description' : playlist.description }}</div>
     </v-card-text>
@@ -27,6 +27,20 @@
       >
         Link
       </v-btn>
+
+      <v-btn
+          @click="copyClipboard"
+          color="#CA2A35"
+          text
+      >
+        Copy link
+      </v-btn>
+      <v-fade-transition mode="append" >
+      <div v-if="showAlert">
+          Link coppied to clipboard
+      </div>
+      </v-fade-transition>
+
     </v-card-actions>
   </v-card>
 </template>
@@ -35,10 +49,26 @@
 export default {
   name: "PlaylistCard",
   props: ['playlist'],
+  data(){
+    return {
+      showAlert: false
+    }
+  },
   methods: {
     redirect: function(){
-      console.log(this.playlist.link);
       open(this.playlist.link);
+    },
+    copyClipboard: function (){
+      navigator.permissions.query({name: "clipboard-write"}).then(res => {
+        if (res.state === "granted" || res.state === "prompt") {
+            navigator.clipboard.writeText(this.playlist.link).then(() => {
+                this.showAlert = true
+              setTimeout(() => {
+                this.showAlert = false;
+              }, 2000)
+            })
+        }
+      })
     }
   }
 }
